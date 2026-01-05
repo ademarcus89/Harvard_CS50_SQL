@@ -1,0 +1,35 @@
+
+-- *** The Lost Letter ***
+-- First I will find the package id using the address ID of the sender and receiver by using this nested query:
+--SELECT * FROM packages
+--WHERE "from_address_id" = (
+--    SELECT id FROM addresses
+--    WHERE address = '900 Somerville Avenue'
+--) AND "to_address_id" = (
+--    SELECT id FROM addresses
+--    WHERE address LIKE '2 Fin% St%'
+--);
+-- With the package id (384), we can use the table "scans" to find out the address ID of where it ended up:
+-- SELECT * FROM scans WHERE package_id = '384' AND action = 'Drop';
+-- This result gives us the answer.
+-- *** The Devious Delivery ***
+-- First I will run a nested query to find the address ID where the package was dropped by using the package ID where the sender's address is null:
+-- SELECT * FROM scans
+--    WHERE package_id = (
+--       SELECT id FROM packages
+--       WHERE from_address_id IS NULL
+--    ) AND action = 'Drop';
+-- Then I will use package ID and address ID to find out where it was delivered and what was in the box:
+--SELECT contents FROM packages WHERE id = '5098';
+--SELECT * FROM addresses WHERE id = '348';
+-- *** The Forgotten Gift ***
+--This query will return all scans associate w/ the package that originated from the customer's address plus contents from packages table and which driver now has it:
+-- SELECT * FROM "scans"
+-- JOIN "packages" JOIN "addresses" JOIN "drivers" ON scans.address_id = addresses.id AND scans.package_id = packages.id AND scans.driver_id = drivers.id
+-- WHERE "package_id" = (
+--    SELECT id FROM "packages"
+--    WHERE to_address_id = (
+--        SELECT id FROM "addresses"
+--        WHERE address = '728 Maple Place'
+--    )
+-- );

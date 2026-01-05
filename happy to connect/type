@@ -1,0 +1,17 @@
+INSERT INTO "users" ("name", "username", "password")
+VALUES ("Alan Garber", "alan", "password");
+
+INSERT INTO "users" ("name", "username", "password")
+VALUES ("Reid Hoffman", "reid", "password");
+
+INSERT INTO "schools" ("name", "school_type", "location", "founding_year")
+VALUES ("Harvard University", "University", "Cambridge, MA", "1636");
+
+INSERT INTO "companies" ("name", "industry", "location")
+VALUES ("LinkedIn", "Tech", "Sunnyvale, CA");
+
+INSERT INTO "company_connections" ("title", "start_date", "end_date")
+VALUES ("CEO", "2003-01-01", "2007-02-01");
+
+INSERT INTO "school_connections" ("start_date", "end_date", "degree_type")
+VALUES ("BA", "1973-09-01", "1976-06-01");
